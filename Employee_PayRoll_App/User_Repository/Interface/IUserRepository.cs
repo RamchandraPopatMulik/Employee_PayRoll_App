@@ -10,5 +10,9 @@ namespace Employee_Payroll_Repository.Interface
         public UserModel Register(UserModel userModel);
 
         public string Login(string EmailID, string Password);
+
+        public string ForgotPassword(string emailID);
+
+        public bool ResetPassword(string Password, string emailID);
     }
 }

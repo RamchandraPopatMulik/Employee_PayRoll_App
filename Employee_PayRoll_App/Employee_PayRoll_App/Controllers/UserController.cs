@@ -3,6 +3,7 @@ using Employee_Payroll_Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 
 namespace Employee_PayRoll_App.Controllers
 {
@@ -46,6 +47,47 @@ namespace Employee_PayRoll_App.Controllers
                     return this.Ok(new { success = true, message = "Login Successfull", result = userToken });
                 }
                 return this.Ok(new { success = true, message = "Enter Valid EmailID or Password" });
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpGet]
+        [Route("Employee_PayRoll/ForgotPassword")]
+        public IActionResult ForgotPassword(string emailID)
+        {
+            try
+            {
+                string emailToken = this.userManager.ForgotPassword(emailID);
+                if (emailToken != null)
+                {
+                    return this.Ok(new { success = true, message = "Forgot Successfull", result = emailToken });
+                }
+                return this.Ok(new { success = true, message = "Enter Valid EmailID " });
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpPut]
+        [Route("Employee_PayRoll/ResetPassword")]
+        public IActionResult ResetPassword(string password, string confirmPassword)
+        {
+            try
+            {
+                string emailID = User.FindFirst(ClaimTypes.Email).Value.ToString();
+                if (password == confirmPassword)
+                {
+                    bool userPassword = this.userManager.ResetPassword(password, emailID);
+                    if (userPassword)
+                    {
+                        return this.Ok(new { success = true, message = "Password Reset Successfully", result = userPassword });
+                    }
+                }
+                return this.Ok(new { success = true, message = "Enter Password same as above" });
+
             }
             catch (Exception ex)
             {

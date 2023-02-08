@@ -36,6 +36,8 @@ namespace Employee_PayRoll_App
             services.AddControllers();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IEmployeeManager, EmployeeManager>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddSwaggerGen();
             services.AddSwaggerGen(s =>
             {

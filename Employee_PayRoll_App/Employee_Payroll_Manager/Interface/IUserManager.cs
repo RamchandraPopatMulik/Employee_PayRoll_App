@@ -10,5 +10,8 @@ namespace Employee_Payroll_Manager.Interface
         public UserModel Register(UserModel userModel);
 
         public string Login(string EmailID, string Password);
+        public string ForgotPassword(string emailID);
+
+        public bool ResetPassword(string Password, string emailID);
     }
 }

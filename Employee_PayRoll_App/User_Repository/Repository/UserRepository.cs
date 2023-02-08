@@ -129,5 +129,75 @@ namespace Employee_Payroll_Repository.Repository
                 }
             }
         }
+        public string ForgotPassword(string emailID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                UserModel userModel = new UserModel();
+
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPForgotPassword", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@EmailID", emailID);
+
+                    connection.Open();
+                    SqlDataReader Reader = command.ExecuteReader();
+
+                    if (Reader.HasRows)
+                    {
+                        while (Reader.Read())
+                        {
+                            userModel.UserID = Reader.IsDBNull("UserID") ? 0 : Reader.GetInt32("UserID");
+                            userModel.FullName = Reader.IsDBNull("FullName") ? string.Empty : Reader.GetString("FullName");
+                        }
+                        string token = GenerateJWTToken(emailID, userModel.UserID);
+                        //MSMQModel mSMQModel = new MSMQModel();
+                        //mSMQModel.SendMessage(token, emailID, userSignUp.FullName);
+                        return token.ToString();
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        public bool ResetPassword(string Password, string emailID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPResetPassword", connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@EmailID", emailID);
+                    command.Parameters.AddWithValue("@Password", EncryptPassword(Password));
+                    connection.Open();
+                    int resetOrNot = command.ExecuteNonQuery();
+
+                    if (resetOrNot >= 1)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
