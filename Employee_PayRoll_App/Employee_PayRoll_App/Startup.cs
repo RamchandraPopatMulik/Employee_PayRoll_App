@@ -2,6 +2,7 @@ using Employee_Payroll_Manager.Interface;
 using Employee_Payroll_Manager.Manager;
 using Employee_Payroll_Repository.Interface;
 using Employee_Payroll_Repository.Repository;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,20 @@ namespace Employee_PayRoll_App
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IEmployeeManager, EmployeeManager>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddMassTransit(x =>
+            {
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+                {
+                    config.UseHealthCheck(provider);
+                    config.Host(new Uri("rabbitmq://localhost"), h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                }));
+            });
+            services.AddMassTransitHostedService();
+            services.AddControllers();
             services.AddSwaggerGen();
             services.AddSwaggerGen(s =>
             {

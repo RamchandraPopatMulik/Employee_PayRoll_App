@@ -10,8 +10,11 @@ namespace Employee_Payroll_Manager.Interface
         public UserModel Register(UserModel userModel);
 
         public string Login(string EmailID, string Password);
+        public User_Ticket CreateTicketForPassword(string emailID, string token);
         public string ForgotPassword(string emailID);
 
         public bool ResetPassword(string Password, string emailID);
+
+        public List<UserModel> GetAllUser();
     }
 }

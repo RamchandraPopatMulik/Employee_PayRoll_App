@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee_PayRoll_App", "Employee_PayRoll_App\Employee_PayRoll_App.csproj", "{BAD2F812-D501-4D24-BB82-02F129F30A8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee_PayRoll_App", "Employee_PayRoll_App\Employee_PayRoll_App.csproj", "{BAD2F812-D501-4D24-BB82-02F129F30A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee_Payroll_Repository", "User_Repository\Employee_Payroll_Repository.csproj", "{5E30DC62-9F29-4B3A-98EF-364434366AE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee_Payroll_Repository", "User_Repository\Employee_Payroll_Repository.csproj", "{5E30DC62-9F29-4B3A-98EF-364434366AE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee_Payroll_Model", "Employee_Payroll_Model\Employee_Payroll_Model.csproj", "{4E1B02D7-F3D2-4AEE-9A87-1F8660131AA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee_Payroll_Model", "Employee_Payroll_Model\Employee_Payroll_Model.csproj", "{4E1B02D7-F3D2-4AEE-9A87-1F8660131AA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee_Payroll_Manager", "Employee_Payroll_Manager\Employee_Payroll_Manager.csproj", "{770433F5-34C3-4FAD-8171-DAB24B71172E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee_Payroll_Manager", "Employee_Payroll_Manager\Employee_Payroll_Manager.csproj", "{770433F5-34C3-4FAD-8171-DAB24B71172E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket_Consumer", "Ticket_Consumer\Ticket_Consumer.csproj", "{565943CB-7559-4F3B-9CA7-EF80F30926CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{770433F5-34C3-4FAD-8171-DAB24B71172E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{770433F5-34C3-4FAD-8171-DAB24B71172E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{770433F5-34C3-4FAD-8171-DAB24B71172E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{565943CB-7559-4F3B-9CA7-EF80F30926CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{565943CB-7559-4F3B-9CA7-EF80F30926CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{565943CB-7559-4F3B-9CA7-EF80F30926CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{565943CB-7559-4F3B-9CA7-EF80F30926CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

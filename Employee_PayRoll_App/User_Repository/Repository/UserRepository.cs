@@ -129,6 +129,42 @@ namespace Employee_Payroll_Repository.Repository
                 }
             }
         }
+        public User_Ticket CreateTicketForPassword(string emailID, string token)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                User_Ticket ticket = new User_Ticket();
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPForgotPassword", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@EmailID", emailID);
+
+                    connection.Open();
+                    SqlDataReader Reader = command.ExecuteReader();
+
+                    if (Reader.HasRows)
+                    {
+                        while (Reader.Read())
+                        {
+                            ticket.FullName = Reader.IsDBNull("FullName") ? string.Empty : Reader.GetString("FullName");
+                            ticket.EmailId = Reader.IsDBNull("EmailID") ? string.Empty : Reader.GetString("EmailID");
+                            ticket.Token = token;
+                            ticket.IssueAt = DateTime.Now;
+
+                        }
+                        return ticket;
+                    }
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public string ForgotPassword(string emailID)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -199,5 +235,53 @@ namespace Employee_Payroll_Repository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public List<UserModel> GetAllUser()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                List<UserModel> getUser = new List<UserModel>();
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPGetAllUser", connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    SqlDataReader Reader = command.ExecuteReader();
+
+                    if (Reader.HasRows)
+                    {
+                        while (Reader.Read())
+                        {
+                            UserModel user = new UserModel()
+                            {
+                                UserID = Reader.IsDBNull("UserID") ? 0 : Reader.GetInt32("UserID"),
+                                FullName = Reader.IsDBNull("FullName") ? string.Empty : Reader.GetString("FullName"),
+                                EmailID = Reader.IsDBNull("EmailID") ? string.Empty : Reader.GetString("EmailID"),
+                                Password = Reader.IsDBNull("Password") ? string.Empty : Reader.GetString("Password"),
+                                MobileNumber = Reader.IsDBNull("MobileNumber") ? 0 : Reader.GetInt64("MobileNumber"),
+                               
+                            };
+                            getUser.Add(user);
+                        }
+                        return getUser;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+       
     }
 }

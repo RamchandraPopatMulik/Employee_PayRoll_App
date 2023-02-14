@@ -3,6 +3,7 @@ using Employee_Payroll_Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace Employee_PayRoll_App.Controllers
@@ -88,6 +89,24 @@ namespace Employee_PayRoll_App.Controllers
                 }
                 return this.Ok(new { success = true, message = "Enter Password same as above" });
 
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpGet]
+        [Route("EmployeePayroll/GetAllUser")]
+        public IActionResult GetAllUser()
+        {
+            try
+            {
+                List<UserModel> allUser = this.userManager.GetAllUser();
+                if (allUser != null)
+                {
+                    return this.Ok(new { success = true, message = "All User Get Successfully", result = allUser });
+                }
+                return this.Ok(new { success = true, message = "No User Present in Database" });
             }
             catch (Exception ex)
             {
